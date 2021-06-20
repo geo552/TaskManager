@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Task Manager</title>
+    <script>
+        function noenter(e) {
+          e = e || window.event;
+            var key = e.keyCode || e.charCode;
+            return key !== 13;
+        }
+    </script>
+    <style type="text/css">
+        table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+            margin: 10px 5px 5px 0px;
+            padding: 5px;
+        }
+        .page-wrapper {
+            display: flex;
+            justify-content: space-between;
+        }
+        .block-left{
+            text-align: left;
+            left: 0;
+            top: 0;
+            width: 350px;
+        }
+        .vl {
+            border-left: 3px solid lightseagreen;
+            height: 100%;
+            position: absolute;
+            left: 350px;
+            margin-left: -3px;
+            top: 0;
+        }
+        .block-right{
+            text-align: left;
+            width: calc(100% - 350px);
+            min-width: 650px;
+        }
+
+        .top_bar{
+            text-align: center;
+            margin-right: 30px;
+        }
+        .top_bar input{
+            font-size: 10px;
+            padding: 5px;
+            position: relative;
+            width: 60px;
+            margin-left: 15px;
+        }
+        #data_input{
+            border-radius: 20px;
+            border: 2px solid black;
+            color: white;
+            background: dimgray;
+            font-size: 25px;
+            padding: 15px;
+            width: 280px;
+            height: 15px;
+            margin-top: 15px;
+            margin-left: 10px;
+        }
+        #data_name{
+            margin-bottom: 20px;
+            font-size: 25px;
+            resize: none;
+            width: 100%;
+            height: 100px;
+            white-space: pre-wrap;
+        }
+        .center_bar{
+            text-align: center;
+        }
+        .mar_right {
+            margin-right: 20px;
+        }
+        #data_information{
+            margin-top: 30px;
+            font-size: 15px;
+            resize: none;
+            width: 100%;
+            height: 500px;
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+<body>
+<div class="page-wrapper">
+    <div class="block-left">
+
+        <div class="top_bar">
+                <input type="submit" value="ADD" form="Add">
+                <input type="submit" value="EDIT" form="Edit">
+                <input type="submit" value="DELETE" form="Delete">
+        </div>
+
+        <form action="/create" id="Add">
+            <input id="data_input" name="data_input" type="text">
+        </form>
+
+        <form action="/delete" id="Delete">
+            {{range .}}
+                <p>
+                    <input type="radio" value={{.Id}} name="listTask" onclick="GetTask({{.}})">{{.Name}}</input>
+                </p>
+            {{end}}
+        </form>
+
+        <script>
+            function GetTask(index) {
+                document.getElementById('data_key').value = index.Id
+                document.getElementById("data_name").innerText = index.Name
+                document.getElementById("data_dateStart").value = index.DateOfStart.toString().slice(0, -4)
+                document.getElementById("data_dateEnd").value = index.DateOfEnd.toString().slice(0, -4)
+                document.getElementById("data_information").innerText = index.Information
+                document.getElementById("data_status").value = index.Status
+            }
+        </script>
+    </div>
+
+    <div class="vl"></div>
+
+    <div class="block-right">
+        <form action="/edit" id="Edit">
+                <input id="data_key" name="data_key" type="text" hidden="true" />
+                <textarea id="data_name" name="data_name" onkeypress="return noenter(event)"></textarea>
+                <div class="center_bar">
+                Status:
+                <select id="data_status" name="data_status" class="mar_right">
+                    <option value="Undefined">Undefined</option>
+                    <option value="Expect">Expect</option>
+                    <option value="Finished">Finished</option>
+                </select>
+                Start Data:
+                <input id="data_dateStart" name="data_dateStart" class="mar_right" type="datetime-local">
+                End Data:
+                <input id="data_dateEnd" name="data_dateEnd" class="mar_right" type="datetime-local">
+                </div>
+            <textarea id="data_information" name="data_information"></textarea>
+        </form>
+    </div>
+</div>
+</body>
+</html>
