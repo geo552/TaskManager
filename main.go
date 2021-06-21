@@ -11,7 +11,7 @@ import (
 func homePage(res http.ResponseWriter, req *http.Request) {
 
 	tmpl, _ := template.ParseFiles("HomePage.html")
-	tmpl.Execute(res, DataBase)
+	tmpl.Execute(res, Dictionary)
 }
 
 func createHandler(w http.ResponseWriter, r *http.Request) {
@@ -24,7 +24,7 @@ func createHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	DataBase.AddTask(&task)
+	Dictionary.AddTask(&task)
 
 	fmt.Printf("Create task (Id = %d)\n", task.Id)
 
@@ -34,18 +34,18 @@ func createHandler(w http.ResponseWriter, r *http.Request) {
 func editHandler(w http.ResponseWriter, r *http.Request) {
 	Id := r.FormValue("data_key")
 	Name := r.FormValue("data_name")
-	StartDate := r.FormValue("data_startDate")
-	EndDate := r.FormValue("data_endDate")
+	DateStart := r.FormValue("data_dateStart")
+	DateEnd := r.FormValue("data_dateEnd")
 	Information := r.FormValue("data_information")
 	Stat := r.FormValue("data_status")
 
 	key, _ := strconv.ParseInt(Id, 0, 64)
 
 	layOut := "2006-01-02T15:04"
-	start, _ := time.Parse(layOut, StartDate)
-	end, _ := time.Parse(layOut, EndDate)
+	start, _ := time.Parse(layOut, DateStart)
+	end, _ := time.Parse(layOut, DateEnd)
 
-	result, err := DataBase.FindTask(int(key))
+	result, err := Dictionary.FindTask(int(key))
 	if err != nil{
 		fmt.Print(err)
 		http.Redirect(w, r, "/", http.StatusSeeOther)
@@ -71,7 +71,7 @@ func deleteHandler(w http.ResponseWriter, r *http.Request) {
 
 	key, err := strconv.ParseInt(Id, 0, 64)
 
-	err = DataBase.DeleteTask(int(key))
+	err = Dictionary.DeleteTask(int(key))
 	if err != nil{
 		fmt.Print(err)
 		http.Redirect(w, r, "/", http.StatusSeeOther)

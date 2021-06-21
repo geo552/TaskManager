@@ -4,7 +4,7 @@ import (
 	"fmt"
 )
 
-var DataBase = TaskList{}
+var Dictionary = TaskList{}
 var key = staticKey()
 func staticKey() (f func()(int)){
 	var i int
@@ -39,10 +39,10 @@ func (list *TaskList) DeleteTask(index int) error{
 		return err
 	}
 
-	var db = *list
+	var dict = *list
 	index--
-	db[len(db)-1], db[index] = db[index], db[len(db)-1]
-	*list = db[:len(db)-1]
+	dict[len(dict)-1], dict[index] = dict[index], dict[len(dict)-1]
+	*list = dict[:len(dict)-1]
 	return nil
 }
 

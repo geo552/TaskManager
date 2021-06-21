@@ -5,7 +5,7 @@
     <title>Task Manager</title>
     <script>
         function noenter(e) {
-          e = e || window.event;
+            e = e || window.event;
             var key = e.keyCode || e.charCode;
             return key !== 13;
         }
@@ -28,7 +28,7 @@
             width: 350px;
         }
         .vl {
-            border-left: 3px solid lightseagreen;
+            border-left: 3px solid red;
             height: 100%;
             position: absolute;
             left: 350px;
@@ -54,7 +54,7 @@
         }
         #data_input{
             border-radius: 20px;
-            border: 2px solid black;
+            border: 2px solid blue;
             color: white;
             background: dimgray;
             font-size: 25px;
@@ -93,9 +93,9 @@
     <div class="block-left">
 
         <div class="top_bar">
-                <input type="submit" value="ADD" form="Add">
-                <input type="submit" value="EDIT" form="Edit">
-                <input type="submit" value="DELETE" form="Delete">
+            <input type="submit" value="ADD" form="Add">
+            <input type="submit" value="EDIT" form="Edit">
+            <input type="submit" value="DELETE" form="Delete">
         </div>
 
         <form action="/create" id="Add">
@@ -126,9 +126,9 @@
 
     <div class="block-right">
         <form action="/edit" id="Edit">
-                <input id="data_key" name="data_key" type="text" hidden="true" />
-                <textarea id="data_name" name="data_name" onkeypress="return noenter(event)"></textarea>
-                <div class="center_bar">
+            <input id="data_key" name="data_key" type="text" hidden="true" />
+            <textarea id="data_name" name="data_name" onkeypress="return noenter(event)"></textarea>
+            <div class="center_bar">
                 Status:
                 <select id="data_status" name="data_status" class="mar_right">
                     <option value="Undefined">Undefined</option>
@@ -139,8 +139,8 @@
                 <input id="data_dateStart" name="data_dateStart" class="mar_right" type="datetime-local">
                 End Data:
                 <input id="data_dateEnd" name="data_dateEnd" class="mar_right" type="datetime-local">
-                </div>
-            <textarea id="data_information" name="data_information"></textarea>
+            </div>
+            <textarea id="data_information" name="data_information" placeholder="Информация"></textarea>
         </form>
     </div>
 </div>
